@@ -50,8 +50,8 @@ echo '------------------------'
 echo 'Vou instalar o Apache + MySQL(mariadb) + PHP + phpMyAdmin + vsFTPd'
 
 yum install -y httpd mariadb-server mariadb php php-mysql vim
-yum install epel-release
-yum install phpmyadmin vsftpd
+yum install -y epel-release
+yum install -y phpmyadmin vsftpd
 
 echo 'FEITO | OK'
 # #$$# FIM Instalações
@@ -90,12 +90,12 @@ echo '------------------------'
 # #$$# INICIO Configurar php.ini
 echo 'Vou configurar o PHP.INI'
 
-sed -i 's/memory_limit = 128M/memory_limit = 384M/' /etc/httpd/conf/httpd.conf
-sed -i 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/' /etc/httpd/conf/httpd.conf
-sed -i 's/post_max_size = 8M/post_max_size = 8M/' /etc/httpd/conf/httpd.conf
-sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 2M/' /etc/httpd/conf/httpd.conf
+sed -i 's/memory_limit = 128M/memory_limit = 384M/' /etc/php.ini
+sed -i 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/' /etc/php.ini
+sed -i 's/post_max_size = 8M/post_max_size = 8M/' /etc/php.ini
+sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 2M/' /etc/php.ini
 
-sed -i 's_;date.timezone =_date.timezone = America/Maceio_' /etc/httpd/conf/httpd.conf
+sed -i 's_;date.timezone =_date.timezone = America/Maceio_' /etc/php.ini
 
 systemctl restart httpd
 echo 'FEITO | OK'
@@ -201,7 +201,7 @@ echo 'Vou configurar FTP (vsftpd)'
 
 sed -i 's/anonymous_enable=YES/anonymous_enable=NO/' /etc/vsftpd/vsftpd.conf
 sed -i 's/#chroot_local_user=YES/chroot_local_user=YES/' /etc/vsftpd/vsftpd.conf
-sed -i 's/#listen=YES/listen=YES/' /etc/vsftpd/vsftpd.conf
+sed -i 's/listen=NO/listen=YES/' /etc/vsftpd/vsftpd.conf
 sed -i 's/listen_ipv6=YES/listen_ipv6=NO/' /etc/vsftpd/vsftpd.conf
 
 echo "allow_writeable_chroot=YES" >> /etc/vsftpd/vsftpd.conf
