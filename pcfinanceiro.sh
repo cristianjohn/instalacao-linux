@@ -230,6 +230,7 @@ echo 'Vou configurar o Firewall e o selinux '
 
 setenforce 0
 sed -i 's_SELINUX=enforcing_SELINUX=disabled_' /etc/sysconfig/selinux
+sed -i 's_SELINUX=enforcing_SELINUX=disabled_' /etc/selinux/config
 
 firewall-cmd --zone=public --add-port=80/tcp --permanent
 firewall-cmd --zone=public --add-port=21/tcp --permanent
