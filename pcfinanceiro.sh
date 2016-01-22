@@ -28,17 +28,17 @@ echo 'Vamos criar os usuários'
 
 adduser john
 echo 'Senha do usuário john'
-passwd john
+#passwd john
 gpasswd -a john wheel
 
 adduser maksoud
 echo 'Senha do usuário maksoud'
-passwd maksoud
+#passwd maksoud
 gpasswd -a maksoud wheel
 
 adduser correiar
 echo 'Senha do usuário correiar'
-passwd correiar
+#passwd correiar
 usermod -s /sbin/nologin correiar
 
 echo 'FEITO | OK'
@@ -49,7 +49,7 @@ echo '------------------------'
 # #$$# INICIO Instalações
 echo 'Vou instalar o Apache + MySQL(mariadb) + PHP + phpMyAdmin + vsFTPd'
 
-yum install -y httpd mariadb-server mariadb php php-mysql
+yum install -y httpd mariadb-server mariadb php php-mysql vim
 yum install epel-release
 yum install phpmyadmin vsftpd
 
