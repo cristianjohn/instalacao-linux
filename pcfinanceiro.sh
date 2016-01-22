@@ -39,6 +39,7 @@ gpasswd -a maksoud wheel
 adduser correiar
 echo 'Senha do usuário correiar'
 passwd correiar
+usermod -s /sbin/nologin correiar
 
 echo 'FEITO | OK'
 # #$$# FIM Criar usuários
@@ -60,8 +61,6 @@ echo '------------------------'
 # #$$# INICIO Configurar Apache
 echo 'Vou configurar o Apache'
 
-systemctl enable httpd.service
-
 sed -i 's_DocumentRoot /var/www/html_DocumentRoot /home/correiar_' /etc/httpd/conf/httpd.conf
 echo "
 <Directory "/home/correiar">
@@ -76,7 +75,12 @@ echo "
    </RequireAny>
 </Directory>" >> /etc/httpd/conf/httpd.conf
 
+usermod -g apache correiar
+chown -R apache:apache /home/correiar
+chmod -R g+w /home/correiar
+
 systemctl start httpd.service
+systemctl enable httpd.service
 
 echo 'FEITO | OK'
 # #$$# FIM Configurar Apache
@@ -183,9 +187,9 @@ echo '------------------------'
 # #$$# INICIO Configurar MySQL
 echo 'Vou configurar o MySQL (mariadb) iniciando o mysql_secure_installation'
 
-sudo systemctl start mariadb
+systemctl start mariadb
 mysql_secure_installation
-sudo systemctl enable mariadb.service
+systemctl enable mariadb.service
 
 echo 'FEITO | OK'
 # #$$# FIM Configurar MySQL
@@ -204,6 +208,9 @@ echo "allow_writeable_chroot=YES" >> /etc/vsftpd/vsftpd.conf
 echo "john
 maksoud" >> /etc/vsftpd/ftpusers 
 
+systemctl restart vsftpd
+systemctl enable vsftpd
+
 echo 'FEITO | OK'
 # #$$# FIM Configurar FTP (vsftpd)
 
@@ -217,6 +224,27 @@ systemctl reload sshd
 
 echo 'FEITO | OK'
 # #$$# FIM Bloquear acesso SSH do root
+
+# #$$# INICIO Configurar Firewall
+echo 'Vou configurar o Firewall e o selinux '
+
+setenforce 0
+sed -i 's_SELINUX=enforcing_SELINUX=disabled_' /etc/sysconfig/selinux
+
+firewall-cmd --zone=public --add-port=80/tcp --permanent
+firewall-cmd --zone=public --add-port=21/tcp --permanent
+
+firewall-cmd --reload
+
+read -p "Quer desativar o firewall S ou N: " desativarFirewall
+if [ "$desativarFirewall" == "S" ]; then
+   systemctl stop firewalld
+   systemctl disable firewalld
+   
+   echo "Firewall Parado e Desabilitado"
+fi
+echo 'FEITO | OK'
+# #$$# FIM Configurar Firewall
 
 
 echo 'Ok... tudo aparentemente pronto, vá testar ;)'
