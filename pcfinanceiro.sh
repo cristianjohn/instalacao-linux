@@ -9,7 +9,7 @@ echo '------------------------'
 echo 'Data/hora no sistema'
 date
 
-yum install ntp
+yum install -y ntp
 ntpdate 0.centos.pool.ntp.org
 service ntpd start
 chkconfig ntpd on
