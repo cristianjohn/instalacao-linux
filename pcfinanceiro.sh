@@ -248,4 +248,21 @@ echo 'FEITO | OK'
 # #$$# FIM Configurar Firewall
 
 
+# #$$# INICIO Swap
+mkdir /swap
+cd /swap
+#4gigas
+dd if=/dev/zero of=/swap/swapfile bs=1024 count=4000000
+mkswap /swap/swapfile
+swapon /swap/swapfile
+
+free -m
+
+vim /etc/fstab
+# acresenta no arquivo: /swap/swapfile swap swap defaults 0 0
+# Salve e saia
+
+# #$$# FIM Swap
+
+
 echo 'Ok... tudo aparentemente pronto, vá testar ;)'
