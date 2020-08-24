@@ -2,6 +2,8 @@
 
 clear
 
+yum install epel-release
+
 echo 'Vamos as configurações iniciais para a máquina do financeiro...'
 echo '------------------------'
 
@@ -9,11 +11,17 @@ echo '------------------------'
 echo 'Data/hora no sistema'
 date
 
+CENTOS 7:
 yum install -y ntp
 ntpdate 0.centos.pool.ntp.org
 service ntpd start
 chkconfig ntpd on
 
+CENTOS 8:
+dnf install chrony
+systemctl enable chronyd
+
+AMBOS:
 rm -f /etc/localtime
 ln -s /usr/share/zoneinfo/America/Maceio /etc/localtime
 
@@ -255,6 +263,7 @@ cd /swap
 dd if=/dev/zero of=/swap/swapfile bs=1024 count=4000000
 mkswap /swap/swapfile
 swapon /swap/swapfile
+chmod 0600 /swap/swapfile
 
 free -m
 
