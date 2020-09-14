@@ -3,6 +3,7 @@
 clear
 
 yum install epel-release
+yum config-manager --set-enabled PowerTools
 
 echo 'Vamos as configurações iniciais para a máquina do financeiro...'
 echo '------------------------'
