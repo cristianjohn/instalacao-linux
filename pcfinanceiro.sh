@@ -238,6 +238,8 @@ echo 'FEITO | OK'
 echo 'Vou configurar o Firewall e o selinux '
 
 setenforce 0
+sed -i 's/^SELINUX=.*/SELINUX=permissive/g' /etc/selinux/config
+
 sed -i 's_SELINUX=enforcing_SELINUX=disabled_' /etc/sysconfig/selinux
 sed -i 's_SELINUX=enforcing_SELINUX=disabled_' /etc/selinux/config
 
