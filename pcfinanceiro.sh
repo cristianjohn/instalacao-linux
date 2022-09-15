@@ -2,6 +2,11 @@
 
 clear
 
+
+#erro de linguagem
+dnf install langpacks-pt_BR glibc-all-langpacks
+
+
 yum install epel-release
 yum config-manager --set-enabled PowerTools
 
