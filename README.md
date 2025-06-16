@@ -38,6 +38,12 @@ cd instalacao-linux
 ou
 
 ```bash
+curl -O https://raw.githubusercontent.com/cristianjohn/instalacao-linux/main/almalinux-setup.sh
+```
+
+ou
+
+```bash
  wget https://raw.githubusercontent.com/cristianjohn/instalacao-linux/main/almalinux-setup.sh
  ```
 
