@@ -151,6 +151,13 @@ confirm "Deseja alterar a porta padrão do SSH?" && {
     fi
 }
 
+# 13. Instalar o QEMU Guest Agent (importante para VMs)
+confirm "Deseja instalar o QEMU Guest Agent?" && {
+    sudo dnf install -y qemu-guest-agent
+    sudo systemctl enable --now qemu-guest-agent
+    echo "✅ QEMU Guest Agent instalado e iniciado."
+}
+
 
 echo ""
 echo "========================="
