@@ -93,6 +93,35 @@ confirm "Deseja instalar o MariaDB?" && {
     echo "MariaDB instalado e seguro."
 }
 
+# 12. Configuração da porta SSH
+confirm "Deseja alterar a porta padrão do SSH?" && {
+    read -p "Digite a nova porta SSH (exemplo: 2222): " ssh_port
+
+    # Validar se é número
+    if [[ "$ssh_port" =~ ^[0-9]+$ ]]; then
+        # Faz backup do sshd_config antes
+        sudo cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bkp
+
+        # Altera a porta no sshd_config (se linha existir ou comentada)
+        sudo sed -i "/^#Port /c\Port $ssh_port" /etc/ssh/sshd_config
+        sudo sed -i "/^Port /c\Port $ssh_port" /etc/ssh/sshd_config
+
+        # Libera nova porta no firewall
+        sudo firewall-cmd --permanent --add-port=$ssh_port/tcp
+        sudo firewall-cmd --reload
+
+        # Reinicia o SSH
+        sudo systemctl restart sshd
+
+        echo "✅ Porta SSH alterada para $ssh_port e liberada no firewall."
+
+        echo "⚠️ Importante: Abra uma nova sessão SSH de teste antes de encerrar a atual, para evitar perda de acesso."
+    else
+        echo "❌ Valor inválido. Porta SSH não alterada."
+    fi
+}
+
+
 echo ""
 echo "========================="
 echo " FINALIZADO!"
