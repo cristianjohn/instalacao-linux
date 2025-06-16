@@ -1,15 +1,3 @@
-
-<h2>Script em evolução ... =D</h2>
-
-<h2>Feito para Centos7</h2>
-
-<pre>
-<code>curl https://raw.githubusercontent.com/cristianjohn/instalacaocentos/master/pcfinanceiro.sh | sh</code>
-</pre>
-
-
-
-
 # 📌 AlmaLinux 10 - Initial Server Setup Script
 
 Este repositório contém um **script shell interativo** para configuração inicial de um servidor **AlmaLinux 10**, especialmente preparado para ambientes com **Nginx**, **MariaDB**, entre outros serviços.
@@ -116,3 +104,10 @@ Sinta-se à vontade para abrir issues, enviar pull requests ou sugerir melhorias
 ## ✅ Aviso de segurança
 
 Este script faz alterações importantes no sistema operacional. Use com responsabilidade, principalmente em ambientes de produção.
+
+
+
+
+
+
+#### script pcfinanceiro.sh é uma versão antiga
