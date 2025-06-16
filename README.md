@@ -38,13 +38,13 @@ cd instalacao-linux
 ou
 
 ```bash
-curl -O https://raw.githubusercontent.com/cristianjohn/instalacao-linux/main/almalinux-setup.sh
+curl -O https://raw.githubusercontent.com/cristianjohn/instalacao-linux/refs/heads/master/almalinux-setup.sh
 ```
 
 ou
 
 ```bash
- wget https://raw.githubusercontent.com/cristianjohn/instalacao-linux/main/almalinux-setup.sh
+ wget https://raw.githubusercontent.com/cristianjohn/instalacao-linux/refs/heads/master/almalinux-setup.sh
  ```
 
 2. **Torne o script executável:**
@@ -72,7 +72,7 @@ nano almalinux-setup.sh
 Se ainda assim desejar:
 
 ```bash
-curl -s https://raw.githubusercontent.com/cristianjohn/instalacao-linux/main/almalinux-setup.sh | bash -
+curl -s https://raw.githubusercontent.com/cristianjohn/instalacao-linux/refs/heads/master/almalinux-setup.sh | bash -
 ```
 
 > **Atenção:** Execute por sua conta e risco. Sempre revise o conteúdo de qualquer script antes de rodar dessa forma.
