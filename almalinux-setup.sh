@@ -68,11 +68,11 @@ confirm "Deseja criar ou recriar a SWAP?" && {
     if [ "$total_mem" -lt 2000 ]; then
         suggested_swap="2G"
     elif [ "$total_mem" -lt 4000 ]; then
-        suggested_swap="2G"
+        suggested_swap="3G"
     elif [ "$total_mem" -lt 8000 ]; then
-        suggested_swap="2G"
+        suggested_swap="4G"
     else
-        suggested_swap="1G"
+        suggested_swap="2G"
     fi
 
     echo "Memória detectada: ${total_mem} MB (~$((${total_mem}/1024)) GB)"
