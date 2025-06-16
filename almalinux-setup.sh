@@ -58,15 +58,45 @@ confirm "Deseja desativar o SELinux? (Requer reboot depois)" && {
     echo "SELinux desativado no próximo reboot."
 }
 
-# 8. Swap
-confirm "Deseja criar uma partição de SWAP?" && {
-    read -p "Digite o tamanho da SWAP (exemplo: 2G): " swapsize
+# 8. Swap (com sugestão automática)
+confirm "Deseja criar ou recriar a SWAP?" && {
+
+    # Detectar quantidade de RAM em MB
+    total_mem=$(grep MemTotal /proc/meminfo | awk '{print int($2/1024)}')
+
+    # Sugerir tamanho de swap com base na RAM
+    if [ "$total_mem" -lt 2000 ]; then
+        suggested_swap="2G"
+    elif [ "$total_mem" -lt 4000 ]; then
+        suggested_swap="2G"
+    elif [ "$total_mem" -lt 8000 ]; then
+        suggested_swap="2G"
+    else
+        suggested_swap="1G"
+    fi
+
+    echo "Memória detectada: ${total_mem} MB (~$((${total_mem}/1024)) GB)"
+    echo "Tamanho de SWAP sugerido: $suggested_swap"
+
+    read -p "Digite o tamanho desejado para a SWAP (exemplo: 2G) ou pressione Enter para usar o sugerido [$suggested_swap]: " swapsize
+    swapsize=${swapsize:-$suggested_swap}
+
+    # Desativa swap existente se houver
+    sudo swapoff -a 2>/dev/null
+
+    # Remove swapfile anterior, se existir
+    sudo rm -f /swapfile
+
+    # Cria nova swap
     sudo fallocate -l $swapsize /swapfile
     sudo chmod 600 /swapfile
     sudo mkswap /swapfile
     sudo swapon /swapfile
-    echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
-    echo "Swap de $swapsize criada e ativada."
+
+    # Garante persistência no fstab
+    grep -q '/swapfile' /etc/fstab || echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+
+    echo "✅ Swap de $swapsize criada e ativada."
 }
 
 # 9. Usuário administrativo
