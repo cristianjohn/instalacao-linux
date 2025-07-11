@@ -32,14 +32,14 @@ confirm "Deseja configurar o timezone?" && {
     echo "Timezone configurado para: $timezone"
 }
 
-# 4. Ferramentas básicas
-confirm "Deseja instalar ferramentas básicas (vim, wget, curl, etc)?" && {
-    sudo dnf install -y vim nano wget curl net-tools bash-completion htop
-}
-
-# 5. EPEL
+# 4. EPEL
 confirm "Deseja instalar o repositório EPEL?" && {
     sudo dnf install -y epel-release
+}
+
+# 5. Ferramentas básicas
+confirm "Deseja instalar ferramentas básicas (vim, wget, curl, etc)?" && {
+    sudo dnf install -y vim nano wget curl net-tools bash-completion htop
 }
 
 # 6. Firewalld
